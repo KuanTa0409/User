@@ -5,66 +5,75 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+	  href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
 <title>User Form</title>
 </head>
-<body style="padding: 15px">
-	<!-- 留白之美 -->
-	<sf:form class="pure-form" method="post" 
-	         th:action="@{${#httpServletRequest.contextPath} + '/user/'}"
-	         th:object="${user}"> <!-- modelAttribute -->
-		<feildset> 
-			<legend>User Form</legend>
-			<!-- user 表單元素 --> 
-            <div>
-                <label>姓名:</label>
-                <sf:input path="name" /> <!-- path指的是 User的屬性。要相同 才可data binding -->
-            </div>
-            <div>
-                <label>年齡:</label>
-                <sf:input path="age" type="number" />
-            </div>
-            <div>
-                <label>生日:</label>
-                <sf:input path="birth" type="date" />
-            </div>
-            <div>
-                <label>學歷:</label>
-                <sf:select path="education">
-                    <sf:option value="">請選擇</sf:option>
-                    <sf:options items="${dataMap.educationData}" 
-                                itemValue="id" 
-                                itemLabel="name" />
-                </sf:select>
-            </div>
-            <div>
-                <label>性別:</label>
-                <sf:radiobuttons path="sex" 
-                                 items="${dataMap.sexData}" 
-                                 cssClass="element-margin" />
-            </div>
-            <div>
-                <label>興趣:</label>
-                <sf:checkboxes path="interest" 
-                               items="${dataMap.interestData}" 
-                               cssClass="element-margin" />
-            </div>
-            <div>
-                <label>履歷:</label>
-                <sf:textarea path="resume" />
-            </div>
-			<!-- 自訂表單元素 --> 
-			<input type="hidden" name="_method" id="_method" th:value="${ _method }"> <!-- model.addAttribute("_method", "POST"); -->
-			<button type="submit" class="pure-button pure-button-primary"
-			        th:text="${submitButtonName}">submit</button><!-- model.addAttribute("submitButtonName", "新增"); --> 
-		</feildset>
-	</sf:form>
-	
-	<form class="pure-form">
-		<fieldset>
-			<legend>User List</legend>
-				${ users }
-		</fieldset>
-	</form>
+<body style="padding: 15px"> <!-- 留白之美 -->
+	<!-- 左(User Form)-右(User List) -->
+	<table>
+		<tr>
+			<td>
+				<!-- User Form -->
+				<sf:form class="pure-form" method="post" 
+	         			 th:action="@{${#httpServletRequest.contextPath} + '/user/'}"
+	         			 th:object="${user}"> <!-- modelAttribute -->
+					<feildset> 
+						<legend>User Form</legend>
+						<!-- user 表單元素 --> 
+			            <div>
+			                <label>姓名:</label>
+			                <sf:input path="name" /> <!-- path指的是 User的屬性。要相同 才可data binding -->
+			            </div>
+			            <div>
+			                <label>年齡:</label>
+			                <sf:input path="age" type="number" />
+			            </div>
+			            <div>
+			                <label>生日:</label>
+			                <sf:input path="birth" type="date" />
+			            </div>
+			            <div>
+			                <label>學歷:</label>
+			                <sf:select path="education">
+			                    <sf:option value="">請選擇</sf:option>
+			                    <sf:options items="${dataMap.educationData}" 
+			                                itemValue="id" 
+			                                itemLabel="name" />
+			                </sf:select>
+			            </div>
+			            <div>
+			                <label>性別:</label>
+			                <sf:radiobuttons path="sex" 
+			                                 items="${dataMap.sexData}" 
+			                                 cssClass="element-margin" />
+			            </div>
+			            <div>
+			                <label>興趣:</label>
+			                <sf:checkboxes path="interest" 
+			                               items="${dataMap.interestData}" 
+			                               cssClass="element-margin" />
+			            </div>
+			            <div>
+			                <label>履歷:</label>
+			                <sf:textarea path="resume" />
+			            </div>
+						<!-- 自訂表單元素 --> 
+						<input type="hidden" name="_method" id="_method" th:value="${ _method }"> <!-- model.addAttribute("_method", "POST"); -->
+						<button type="submit" class="pure-button pure-button-primary"
+						        th:text="${submitButtonName}">submit</button><!-- model.addAttribute("submitButtonName", "新增"); --> 
+					</feildset>
+				</sf:form>
+			</td>
+			<td>
+				<!-- User List -->
+				<form class="pure-form">
+					<fieldset>
+						<legend>User List</legend>
+						${ users }
+					</fieldset>
+				</form>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>
