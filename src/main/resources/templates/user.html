@@ -12,10 +12,10 @@
 	<!-- 左(User Form)-右(User List) -->
 	<table>
 		<tr>
-			<td>
+			<td valign="top" style="padding: 6px">
 				<!-- User Form -->
 				<sf:form class="pure-form" method="post" 
-	         			 th:action="@{${#httpServletRequest.contextPath} + '/user/'}"
+	         			 th:action="@{/user/}"
 	         			 th:object="${user}"> <!-- modelAttribute -->
 					<feildset> 
 						<legend>User Form</legend>
@@ -64,7 +64,7 @@
 					</feildset>
 				</sf:form>
 			</td>
-			<td>
+			<td valign="top"> <!-- 垂直對齊 -->
 				<!-- User List -->
 				<form class="pure-form">
 					<fieldset>
