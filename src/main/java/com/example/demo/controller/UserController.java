@@ -1,13 +1,19 @@
 package com.example.demo.controller;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.entity.User;
@@ -17,6 +23,19 @@ import com.example.demo.entity.User;
 public class UserController {
 	
 	private List<User> users = new CopyOnWriteArrayList<>();
+	// form data 參數
+	private List<EducationData> educationData = Arrays.asList(
+			new EducationData("1", "小學"),
+			new EducationData("2", "國中"),
+			new EducationData("3", "高中"),
+			new EducationData("4", "大學"),
+			new EducationData("5", "研究所")
+	);
+	private List<String> sexData = Arrays.asList("男", "女", "不表態");
+	private List<String> interestData = Arrays.asList("爬山", "閱讀", "運動", "逛街", "手遊");
+	// form data 參數集合
+	private Map<String, List> dataMap = new LinkedHashMap<>();
+	
 	{
 		//                 姓名       年齡     生日    學歷  性別      興趣               履歷
 		users.add(new User("Vincent", 18, new Date(), "4", "男", new String[] {"飛控"}, "Test1"));
@@ -24,6 +43,11 @@ public class UserController {
 		users.add(new User("Helen", 24, new Date(), "5", "女", new String[] {"爬山","打球"}, "Test3"));
 		users.add(new User("Jack", 19, new Date(), "4", "男", new String[] {"爬山","飛控"}, "Test4"));
 		users.add(new User("Jean", 17, new Date(), "3", "女", null, "Test5"));
+		
+		// 配置 form data 參數
+		dataMap.put("educationData", educationData);
+		dataMap.put("sexData", sexData);
+		dataMap.put("interestData", interestData);
 	}
 	
 	// 首頁
@@ -48,10 +72,27 @@ public class UserController {
 		// 四個變數_method、submitButtonName、users、user會帶給前端，讓其自行渲染
 	}
 	
+	@GetMapping("/{index}")
+		public String get(@PathVariable("index")int index, Model model) {
+			User user = users.get(index);
+			model.addAttribute("user", user);   // 需自帶 user (因沒有@ModelAttribute)
+			model.addAttribute("index", index); // 需自帶 index 給 form 表單的 action
+		
+			model.addAttribute("_method", "PUT");           
+			model.addAttribute("submitButtonName", "修改"); 
+			model.addAttribute("users", users);
+			return "user";
+		}
+
 	@PostMapping("/")
 	public String add(@ModelAttribute User user) { // user會得到 html表單上傳的資訊
 		users.add(user);
 		return "redirect:./"; // 新增好 就重導
+	}
+	
+	@PutMapping("/{index}")
+	public String update(@PathVariable("index") int index, @ModelAttribute User user) {
+		users.set(index, user);
 	}
 	
 	

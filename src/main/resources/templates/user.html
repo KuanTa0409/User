@@ -95,7 +95,7 @@
 										<td class="no-wrap" th:text="${status.index}"></td>
                         				<td class="no-wrap" th:text="${user.name}"></td>
                         				<td class="no-wrap" th:text="${user.age}"></td>
-                        				<td class="no-wrap" th:text="${#temporals.format(user.birth, 'yyyy-MM-dd')}"></td>
+                        				<td class="no-wrap" th:text="${#dates.format(user.birth, 'yyyy-MM-dd')}"></td>
                         				
                         				<td class="no-wrap">
 	                            			<!-- 學歷名稱顯示 -->
