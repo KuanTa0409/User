@@ -60,6 +60,8 @@ public class UserController {
 		model.addAttribute("submitButtonName", "新增");  //將按鈕視為變數，不要寫死，由前端的動作 來調整按鈕名稱
 		model.addAttribute("users", users);             //列表，所有使用者的資料
 		// model.addAttribute("user", user); 可以不用寫，因為@ModelAttribute會將User user物件帶給前端。
+		// 加入 form 表單參數資料
+		model.addAttribute("dataMap", dataMap);
 		
 		/* 資料就會被set至表單上，顯示在前端上...data binding(只要改變 物件屬性內容>前端表單內容就會改變)
 		user.setName("Vincent");
@@ -89,6 +91,7 @@ public class UserController {
 			model.addAttribute("submitButtonName", "修改"); 
 		}
 		model.addAttribute("users", users);
+		model.addAttribute("dataMap", dataMap);
 		return "user";
 	}
 	
