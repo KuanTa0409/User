@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.entity.User;
@@ -37,6 +38,12 @@ public class UserController {
 		*/
 		return "user";
 		// 四個變數_method、submitButtonName、users、user會帶給前端，讓其自行渲染
+	}
+	
+	@PostMapping("/")
+	public String add(@ModelAttribute User user) { // user會得到 html表單上傳的資訊
+		users.add(user);
+		return "redirect:./"; // 新增好 就重導
 	}
 	
 	
