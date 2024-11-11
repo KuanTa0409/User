@@ -17,6 +17,14 @@ import com.example.demo.entity.User;
 public class UserController {
 	
 	private List<User> users = new CopyOnWriteArrayList<>();
+	{
+		//                 姓名       年齡     生日    學歷  性別      興趣               履歷
+		users.add(new User("Vincent", 18, new Date(), "4", "男", new String[] {"飛控"}, "Test1"));
+		users.add(new User("Mary", 17, new Date(), "3", "女", new String[] {"爬山,看書"}, "Test2"));
+		users.add(new User("Helen", 24, new Date(), "5", "女", new String[] {"爬山","打球"}, "Test3"));
+		users.add(new User("Jack", 19, new Date(), "4", "男", new String[] {"爬山","飛控"}, "Test4"));
+		users.add(new User("Jean", 17, new Date(), "3", "女", null, "Test5"));
+	}
 	
 	// 首頁
 	@GetMapping("/")    // http://localhost:8081/User/user/      

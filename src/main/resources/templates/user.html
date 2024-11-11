@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sf="http://www.springframework.org/tags/form">
+	  xmlns:sf="http://www.springframework.org/tags/form">
 <!-- Spring Form -->
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet"
-	  href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
-<title>User Form</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet"
+		  href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+	<style>
+        .nowrap {
+            white-space: nowrap;
+        }
+    </style>
+	<title>User Form</title>
 </head>
+
 <body style="padding: 15px"> <!-- 留白之美 -->
 	<!-- 左(User Form)-右(User List) -->
 	<table>
@@ -69,7 +75,60 @@
 				<form class="pure-form">
 					<fieldset>
 						<legend>User List</legend>
-						${ users }
+							<table class="pure-table pure-table-bordered">
+								<thead>
+									<tr>
+				                        <th class="no-wrap">序號</th>
+				                        <th class="no-wrap">姓名</th>
+				                        <th class="no-wrap">年齡</th>
+				                        <th class="no-wrap">生日</th>
+				                        <th class="no-wrap">學歷</th>
+				                        <th class="no-wrap">性別</th>
+				                        <th class="no-wrap">興趣</th>
+				                        <th class="no-wrap">履歷</th>
+				                        <th class="no-wrap">編輯</th>
+				                        <th class="no-wrap">刪除</th>
+                    				</tr>
+								</thead>
+								<tbody>
+									<tr th:each="user, status : ${users}">
+										<td class="no-wrap" th:text="${status.index}"></td>
+                        				<td class="no-wrap" th:text="${user.name}"></td>
+                        				<td class="no-wrap" th:text="${user.age}"></td>
+                        				<td class="no-wrap" th:text="${#temporals.format(user.birth, 'yyyy-MM-dd')}"></td>
+                        				
+                        				<td class="no-wrap">
+	                            			<!-- 學歷名稱顯示 -->
+	                            			<span th:each="edu : ${dataMap.educationData}"
+	                                  			  th:if="${user.education == edu.id}"
+	                                              th:text="${edu.name}">
+	                            			</span>
+                        				</td>
+                        				
+                        				<td class="no-wrap" th:text="${user.sex}"></td>
+                        				
+				                        <td class="no-wrap">
+				                            <!-- 興趣陣列用空格連接 -->
+				                            <span th:text="${#strings.arrayJoin(user.interest, ' ')}"></span>
+				                        </td>
+				                        
+                        				<td class="no-wrap" th:text="${user.resume}"></td>
+                        				
+										<td class="no-wrap">
+				                            <!-- 編輯按鈕 -->
+				                            <button type="button"
+				                                    class="pure-button"
+				                                    th:onclick="'window.location.href=\'' + @{user/{id}(id=${status.index})} + '\''">
+				                                編輯
+				                            </button>
+                        				</td>
+										<td>
+											<a th:href="@{/rest/{id}(id=${status.index}, action='delete')}" 
+           					   			       class="pure-button pure-button-primary">刪除</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 					</fieldset>
 				</form>
 			</td>
