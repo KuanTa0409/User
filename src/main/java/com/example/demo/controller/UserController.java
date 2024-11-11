@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.EducationData;
 import com.example.demo.entity.User;
@@ -74,17 +75,23 @@ public class UserController {
 	}
 	
 	@GetMapping("/{index}")
-		public String get(@PathVariable("index")int index, Model model) {
-			User user = users.get(index);
-			model.addAttribute("user", user);   // 需自帶 user (因沒有@ModelAttribute)
-			model.addAttribute("index", index); // 需自帶 index 給 form 表單的 action
-		
-			model.addAttribute("_method", "PUT");           
+	public String get(@PathVariable("index")int index, Model model, @RequestParam(value = "action", required = false) String action) {
+		User user = users.get(index);
+		model.addAttribute("user", user);   // 需自帶 user (因沒有@ModelAttribute)
+		model.addAttribute("index", index); // 需自帶 index 給 form 修改表單的 action
+		                                    // 不傳index，action的url就不出現/{id}，此時為 新增
+		if(action != null && action.equals("delete")) {
+			model.addAttribute("_method", "DELETE");
+			model.addAttribute("submitButtonName", "刪除"); 
+		}else {
+			model.addAttribute("_method", "PUT");
+			// 前端表單 button變為修改(_method=PUT),表單的action的url會增加 /{id}，
 			model.addAttribute("submitButtonName", "修改"); 
-			model.addAttribute("users", users);
-			return "user";
 		}
-
+		model.addAttribute("users", users);
+		return "user";
+	}
+	
 	@PostMapping("/")
 	public String add(@ModelAttribute User user) { // user會得到 html表單上傳的資訊
 		users.add(user);
@@ -97,17 +104,9 @@ public class UserController {
 		return "redirect:./";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PutMapping("/{index}")
+	public String delete(@PathVariable("index") int index) {
+		users.remove(index);
+		return "redirect:./";
+	}	
 }
