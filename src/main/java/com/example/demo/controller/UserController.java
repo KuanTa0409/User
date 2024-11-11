@@ -9,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -107,7 +108,7 @@ public class UserController {
 		return "redirect:./";
 	}
 	
-	@PutMapping("/{index}")
+	@DeleteMapping("/{index}")
 	public String delete(@PathVariable("index") int index) {
 		users.remove(index);
 		return "redirect:./";

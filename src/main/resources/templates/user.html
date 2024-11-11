@@ -7,10 +7,14 @@
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
 	<style>
-        .nowrap {
+        .no-wrap {
             white-space: nowrap;
         }
-    </style>
+    	.element-margin { /* 選項之間有間格 */
+			margin-right:2px;
+			margin-left:5px;
+		}
+	</style>
 	<title>User Form</title>
 </head>
 
@@ -23,7 +27,7 @@
 				<sf:form class="pure-form" method="post" 
 	         			 th:action="@{/user/{id}(id=${status.index})}"
 	         			 th:object="${user}"> <!-- modelAttribute -->
-					<feildset> 
+					<fieldset> 
 						<legend>User Form</legend>
 						<!-- user 表單元素 --> 
 			            <div>
@@ -67,7 +71,7 @@
 						<input type="hidden" name="_method" id="_method" th:value="${ _method }"> <!-- model.addAttribute("_method", "POST"); -->
 						<button type="submit" class="pure-button pure-button-primary"
 						        th:text="${submitButtonName}">submit</button><!-- model.addAttribute("submitButtonName", "新增"); --> 
-					</feildset>
+					</fieldset>
 				</sf:form>
 			</td>
 			<td valign="top" style="padding: 6px"> <!-- 垂直對齊 -->
