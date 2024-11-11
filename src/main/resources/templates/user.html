@@ -21,7 +21,7 @@
 			<td valign="top" style="padding: 6px">
 				<!-- User Form -->
 				<sf:form class="pure-form" method="post" 
-	         			 th:action="@{/user/}"
+	         			 th:action="@{/user/{id}(id=${status.index})}"
 	         			 th:object="${user}"> <!-- modelAttribute -->
 					<feildset> 
 						<legend>User Form</legend>

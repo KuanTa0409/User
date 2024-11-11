@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.entity.EducationData;
 import com.example.demo.entity.User;
 
 @Controller
@@ -93,6 +94,7 @@ public class UserController {
 	@PutMapping("/{index}")
 	public String update(@PathVariable("index") int index, @ModelAttribute User user) {
 		users.set(index, user);
+		return "redirect:./";
 	}
 	
 	
