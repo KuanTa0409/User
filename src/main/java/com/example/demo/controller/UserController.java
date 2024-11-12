@@ -34,7 +34,7 @@ public class UserController {
 			new EducationData("4", "大學"),
 			new EducationData("5", "研究所")
 	);
-	private List<String> sexData = Arrays.asList("男", "女", "不表態");
+	private List<String> sexData = Arrays.asList("男", "女", "其他");
 	private List<String> interestData = Arrays.asList("爬山", "閱讀", "運動", "逛街", "手遊");
 	// form data 參數集合
 	private Map<String, List> dataMap = new LinkedHashMap<>();
@@ -56,7 +56,6 @@ public class UserController {
 	// 首頁
 	@GetMapping("/")    // http://localhost:8081/User/user/      
 	public String index(Model model, @ModelAttribute User user) {
-		//User user = new User();
 		// 要放在表單裡面的就是ModelAttribute。放在表單以外的資料要渲染呈現的 在model裡面
 		model.addAttribute("_method", "POST");           //有個變數叫_method，去影響表單的隱含hidden欄位的值
 		model.addAttribute("submitButtonName", "新增");  //將按鈕視為變數，不要寫死，由前端的動作 來調整按鈕名稱
