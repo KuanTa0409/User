@@ -1,20 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sf="http://www.springframework.org/tags/form">
+<html xmlns:th="http://www.thymeleaf.org">
 <!-- Spring Form -->
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
 	<style>
-        .no-wrap {
-            white-space: nowrap;
+        .pure-control-group > div {
+            margin-bottom: 15px;
         }
-    	.element-margin { /* 選項之間有間格 */
-			margin-right:2px;
-			margin-left:5px;
-		}
-	</style>
+        .pure-control-group label {
+            display: inline-block;
+            width: 70px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .element-margin {
+            margin-right: 10px;
+        }
+        .pure-input-1-2 {
+            width: 50%;
+        }
+        .error {
+            color: red;
+            font-size: 0.8em;
+            margin-left: 80px;
+        }
+        /* 新增的樣式 */
+        .options-group {
+            display: inline-block;
+            margin-left: 5px;
+        }
+        .option-item {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .option-item label {
+            width: auto;
+            margin-right: 5px;
+        }
+    </style>
 	<title>User Form</title>
 </head>
 
@@ -24,49 +53,60 @@
 		<tr>
 			<td valign="top" style="padding: 6px">
 				<!-- User Form -->
-				<sf:form class="pure-form" method="post" 
-	         			 th:action="${index != null} ? @{/user/{id}(id=${index})} : @{/user/}"
-	         			 th:object="${user}"> <!-- modelAttribute -->
-					<fieldset> 
-						<legend>User Form</legend>
-						<!-- user 表單元素 --> 
-			            <div>
-			                <label>姓名:</label>
-			                <sf:input path="name" /> <!-- path指的是 User的屬性。要相同 才可data binding -->
-			            </div>
-			            <div>
-			                <label>年齡:</label>
-			                <sf:input path="age" type="number" />
-			            </div>
-			            <div>
-			                <label>生日:</label>
-			                <sf:input path="birth" type="date" />
-			            </div>
-			            <div>
-			                <label>學歷:</label>
-			                <sf:select path="education">
-			                    <sf:option value="">請選擇</sf:option>
-			                    <sf:options items="${dataMap.educationData}" 
-			                                itemValue="id" 
-			                                itemLabel="name" />
-			                </sf:select>
-			            </div>
-			            <div>
-			                <label>性別:</label>
-			                <sf:radiobuttons path="sex" 
-			                                 items="${dataMap.sexData}" 
-			                                 cssClass="element-margin" />
-			            </div>
-			            <div>
-			                <label>興趣:</label>
-			                <sf:checkboxes path="interest" 
-			                               items="${dataMap.interestData}" 
-			                               cssClass="element-margin" />
-			            </div>
-			            <div>
-			                <label>履歷:</label>
-			                <sf:textarea path="resume" />
-			            </div>
+                <form class="pure-form" method="post" 
+                      th:action="${index != null} ? @{/user/{id}(id=${index})} : @{/user/}"
+                      th:object="${user}">
+                    <fieldset>
+                        <legend>User Form</legend>
+                        <div class="pure-control-group">
+                            <div>
+                                <label>姓名:</label>
+                                <input type="text" th:field="*{name}" class="pure-input-1-2" />
+                            </div>
+                            
+                            <div>
+                                <label>年齡:</label>
+                                <input type="number" th:field="*{age}" class="pure-input-1-2" />
+                            </div>
+                            
+                            <div>
+                                <label>生日:</label>
+                                <input type="date" th:field="*{birth}" class="pure-input-1-2" />
+                            </div>
+                            
+                            <div>
+                                <label>學歷:</label>
+                                <select th:field="*{education}" class="pure-input-1-2">
+                                    <option value="">請選擇</option>
+                                    <option th:each="edu : ${dataMap.educationData}"
+                                            th:value="${edu.id}"
+                                            th:text="${edu.name}">
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label>性別:</label>
+                                <div th:each="gender : ${dataMap.sexData}" class="option-item">
+                                    <input type="radio" th:field="*{sex}" th:value="${gender}" />
+                                    <label th:text="${gender}" ></label>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label>興趣:</label>
+                                <div th:each="hobby : ${dataMap.interestData}" class="option-item">
+                                    <input type="checkbox" th:field="*{interest}" th:value="${hobby}" />
+                                    <label th:text="${hobby}" ></label>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label>履歷:</label>
+                                <textarea th:field="*{resume}" class="pure-input-1-2"></textarea>
+                            </div>
+                        </div>
+			            
 						<!-- 自訂表單元素 --> 
 						<input type="hidden" name="_method" id="_method" th:value="${ _method }"> <!-- model.addAttribute("_method", "POST"); -->
 						<button type="submit" class="pure-button pure-button-primary"
@@ -122,7 +162,7 @@
 				                            <!-- 編輯按鈕 -->
 				                            <button type="button"
 				                                    class="pure-button"
-				                                    th:onclick="'window.location.href=\'' + @{user/{id}(id=${status.index})} + '\''">
+				                                    th:onclick="'window.location.href=\'' + @{/user/{id}(id=${status.index})} + '\''">
 				                                編輯
 				                            </button>
                         				</td>

@@ -56,11 +56,12 @@ public class UserController {
 	// 首頁
 	@GetMapping("/")    // http://localhost:8081/User/user/      
 	public String index(Model model, @ModelAttribute User user) {
+		//User user = new User();
 		// 要放在表單裡面的就是ModelAttribute。放在表單以外的資料要渲染呈現的 在model裡面
 		model.addAttribute("_method", "POST");           //有個變數叫_method，去影響表單的隱含hidden欄位的值
 		model.addAttribute("submitButtonName", "新增");  //將按鈕視為變數，不要寫死，由前端的動作 來調整按鈕名稱
 		model.addAttribute("users", users);             //列表，所有使用者的資料
-		// model.addAttribute("user", user); 可以不用寫，因為@ModelAttribute會將User user物件帶給前端。
+		//model.addAttribute("user", user); 可以不用寫，因為@ModelAttribute會將User user物件帶給前端。
 		// 加入 form 表單參數資料
 		model.addAttribute("dataMap", dataMap);
 		
@@ -103,6 +104,8 @@ public class UserController {
 	
 	@PostMapping("/")
 	public String add(@ModelAttribute User user) { // user會得到 html表單上傳的資訊
+		// 添加日誌輸出以檢查接收到的數據
+        System.out.println("Received user: " + user);
 		users.add(user);
 		return "redirect:./"; // 新增好 就重導
 	}
