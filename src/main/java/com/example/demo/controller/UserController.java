@@ -78,7 +78,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/{index}")
-	public String get(@PathVariable("index")int index, Model model, @RequestParam(value = "action", required = false) String action) {
+	public String get(@PathVariable("index")int index, Model model, 
+			          @RequestParam(value = "action", required = false) String action) {
 		User user = users.get(index);
 		model.addAttribute("user", user);   // 需自帶 user (因沒有@ModelAttribute)
 		model.addAttribute("index", index); // 需自帶 index 給 form 修改表單的 action
@@ -91,6 +92,10 @@ public class UserController {
 			// 前端表單 button變為修改(_method=PUT),表單的action的url會增加 /{id}，
 			model.addAttribute("submitButtonName", "修改"); 
 		}
+		/*
+		 * model.addAttribute("_method", action != null && action.equals("delete") ? "DELETE" : "PUT");
+    	 * model.addAttribute("submitButtonName", action != null && action.equals("delete") ? "刪除" : "修改");
+		 */
 		model.addAttribute("users", users);
 		model.addAttribute("dataMap", dataMap);
 		return "user";
