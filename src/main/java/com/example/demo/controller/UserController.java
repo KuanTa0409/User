@@ -89,7 +89,7 @@ public class UserController {
 			model.addAttribute("submitButtonName", "刪除"); 
 		}else {
 			model.addAttribute("_method", "PUT");
-			// 前端表單 button變為修改(_method=PUT),表單的action的url會增加 /{id}，
+			// 前端表單 button變為修改(_method=PUT),表單的action的url會增加 /{id}
 			model.addAttribute("submitButtonName", "修改"); 
 		}
 		/*

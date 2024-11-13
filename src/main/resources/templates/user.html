@@ -55,12 +55,14 @@
 				<!-- User Form -->
                 <form class="pure-form" method="post" 
                       th:action="${index != null} ? @{/user/{id}(id=${index})} : @{/user/}"
-                      th:object="${user}">
+                      th:object="${user}"> <!-- @ModelAttribute User user -->
                     <fieldset>
                         <legend>User Form</legend>
                         <div class="pure-control-group">
                             <div>
-                                <label>姓名:</label>
+                                <label>姓名:</label> 
+                                <!-- th:field 自動處理了 name 屬性和值的綁定 -->
+                                <!-- 因在表單上使用 th:object ，*{property} 相當於 ${user.property}，但更簡潔-->
                                 <input type="text" th:field="*{name}" class="pure-input-1-2" />
                             </div>
                             
@@ -110,9 +112,9 @@
 						<!-- 自訂表單元素 --> 
 						<input type="hidden" name="_method" id="_method" th:value="${ _method }"> <!-- model.addAttribute("_method", "POST"); -->
 						<button type="submit" class="pure-button pure-button-primary"
-						        th:text="${submitButtonName}">submit</button><!-- model.addAttribute("submitButtonName", "新增"); --> 
+						        th:text="${submitButtonName}"></button><!-- model.addAttribute("submitButtonName", "新增"); --> 
 					</fieldset>
-				</sf:form>
+				</form>
 			</td>
 			<td valign="top" style="padding: 6px"> <!-- 垂直對齊 -->
 				<!-- User List -->
